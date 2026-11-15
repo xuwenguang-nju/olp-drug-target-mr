@@ -7,14 +7,6 @@ Figure 1,C,"Druggable genes carrying a cis-eQTL instrument (5,801 of 9,261)",fig
 Figure 1,D,"Manhattan plot, WIDE case definition (5,040 genes)",journal_fig2.R -> png_a  (re-scaled x axis in the plate script),results/tables/mr_olp_wide_results.csv,NOT RETAINED
 Figure 1,E,"Manhattan plot, INCLAVO case definition",journal_fig2.R -> png_b,results/tables/mr_olp_inclavo_results.csv,NOT RETAINED
 Figure 1,F,Volcano plot of the WIDE screen,journal_fig2.R -> vol,results/tables/mr_olp_wide_results.csv,NOT RETAINED
-Figure 2,A,Dual-cohort forest plot of the 22 WIDE Bonferroni-significant genes,build_supplementary_figures.R -> p1,results/tables/supplementary/suppl_table_02_wide_hits_mr_replication_coloc.csv,analysis/scripts/build_supplementary_tables.py
-Figure 2,B,Forest plot of the five tiered candidates,journal_fig3.R -> p,results/tables/final_target_evidence.csv,NOT RETAINED
-Figure 2,C,Multi-signal (SuSiE) vs single-signal (coloc.abf) PP.H4,journal_fig4.R -> pb,results/tables/coloc_olp_results.csv,analysis/scripts/run_coloc.R
-Figure 2,C,Multi-signal (SuSiE) vs single-signal (coloc.abf) PP.H4,journal_fig4.R -> pb,results/tables/susie_coloc_results.csv,analysis/scripts/run_susie_coloc.R
-Figure 2,D,"coloc.abf PP.H4 for the 22 WIDE hits, both case definitions",journal_fig4.R -> pa,results/tables/coloc_olp_results.csv,analysis/scripts/run_coloc.R
-Figure 2,D,"coloc.abf PP.H4 for the 22 WIDE hits, both case definitions",journal_fig4.R -> pa,results/tables/mr_olp_wide_results.csv,NOT RETAINED
-Figure 2,E,Full posterior decomposition across the 44 gene-definition runs,build_supplementary_figures.R -> p2,results/tables/supplementary/_retired/coloc_abf_susie_44runs.csv,analysis/scripts/build_supplementary_tables.py
-Figure 2,F,Bonferroni vs BH-FDR multiplicity sensitivity,build_supplementary_figures.R -> p3,results/tables/supplementary/suppl_table_01_full_mr_screen_5040.csv,analysis/scripts/build_supplementary_tables.py
 Figure 3,A,PheWAS of each candidate's top cis-eQTL across FinnGen R13 phenotypes,build_final_mr_figures.R -> phewas  (= journal_fig5.R -> pa),results/tables/phewas_olp_all.csv,NOT RETAINED
 Figure 3,B,Steiger directionality test,build_final_mr_figures.R -> steiger,results/tables/steiger_direction_test.csv,analysis/scripts/run_steiger_test.py
 Figure 3,C,SuSiE pleiotropy for the chr12 candidates,build_final_mr_figures.R -> susie,results/tables/susie_pleiotropy_results.csv,analysis/scripts/run_susie_pleiotropy.R
@@ -66,3 +58,12 @@ Supplementary Figure 4,,A candidate expression across 19 cell types; B per-cell-
 Supplementary Figure 4,,A candidate expression across 19 cell types; B per-cell-type UMAP facets,scrna_suppfig8_candidate_expression_gse211630.panel_A / panel_B,results/tables/geo_gse211630_celltype_annotation.csv,analysis/scripts/scrna_annotate_gse211630.py
 Supplementary Figure 4,,A candidate expression across 19 cell types; B per-cell-type UMAP facets,scrna_suppfig8_candidate_expression_gse211630.panel_A / panel_B,results/tables/geo_gse211630_candidate_celltype_enrichment.csv,analysis/scripts/scrna_annotate_gse211630.py
 Supplementary Figure 4,,A candidate expression across 19 cell types; B per-cell-type UMAP facets,scrna_suppfig8_candidate_expression_gse211630.panel_A / panel_B,results/tables/geo_gse211630_candidate_loc.csv,analysis/scripts/plot_scrna_candidates_gse211630.py
+Figure 2,A,Dual-cohort forest plot of the 22 WIDE Bonferroni-significant genes,build_supplementary_figures.R -> p1,results/tables/supplementary/suppl_table_02_wide_hits_mr_replication_coloc.csv,analysis/scripts/build_supplementary_tables.py
+Figure 2,B,Forest plot of the five tiered candidates,journal_fig3.R -> p,results/tables/final_target_evidence.csv,NOT RETAINED
+Figure 2,C,"OR with 95% CI across the three case definitions, GDF11 and SUOX",fig02_plan1_draft.R -> panel C,results/tables/corrected/candidates_three_definitions.csv,mr_oral_strict_sensitivity.R; mr_wald_ratio.R
+Figure 2,D,Conditional z at chromosome 12 before and after adjusting each gene for the other,fig02_plan1_draft.R -> panel D,results/tables/corrected/chr12_conditional_analysis.csv,chr12_conditional_analysis.py
+Figure 2,E,Single-instrument vs joint two-exposure MVMR at chromosome 12,fig02_plan1_draft.R -> panel E,results/tables/corrected/chr12_two_exposure_mvmr.csv,chr12_two_exposure_mvmr.py
+Figure 2,F,Bonferroni vs BH-FDR multiplicity sensitivity,build_supplementary_figures.R -> p3,results/tables/supplementary/suppl_table_01_full_mr_screen_5040.csv,analysis/scripts/build_supplementary_tables.py
+Supplementary Figure 5,A,SuSiE vs coloc.abf PP.H4 for the 22 WIDE hits,journal_fig4.R -> pb,results/tables/susie_coloc_results.csv,analysis/scripts/run_susie_coloc.R
+Supplementary Figure 5,B,"coloc.abf PP.H4 for the 22 WIDE hits, both case definitions",journal_fig4.R -> pa,results/tables/coloc_olp_results.csv,analysis/scripts/run_coloc.R
+Supplementary Figure 5,C,Full posterior decomposition across the 44 gene-definition runs,build_supplementary_figures.R -> p2,results/tables/coloc_olp_results.csv,analysis/scripts/run_coloc.R

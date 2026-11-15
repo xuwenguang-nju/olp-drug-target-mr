@@ -44,5 +44,6 @@ save_journal <- function(base, plot, width_mm, height_mm, dir = "figures/journal
 }
 
 # 色盲安全聚焦色板（与原图一致：TIER1 深红 #C8102E, TIER2 藏青 #005BBB, TIER3 灰）
-tier_colours <- c(TIER1 = "#C8102E", TIER2 = "#005BBB", TIER3 = "#7F7F7F")
+tier_colours <- c(FIRST = "#C8102E", SECOND = "#005BBB", THIRD = "#7F7F7F",
+                 TIER1 = "#C8102E", TIER2 = "#005BBB", TIER3 = "#7F7F7F")
 cohort_colours <- c(WIDE = "#1B9E77", INCLAVO = "#7570B3")

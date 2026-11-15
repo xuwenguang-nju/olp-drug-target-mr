@@ -2,15 +2,17 @@
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24052532.svg)](https://doi.org/10.5281/zenodo.24052532)
 
-Archived as `v1.0.0` at DOI **10.5281/zenodo.24052533**; the badge above resolves to
-the latest archived version. `v1.0.0` predates the allele-alignment correction
-described under *Corrections after first release* below and does **not** reproduce
-the published figures. Cite the badge (concept DOI) rather than the `v1.0.0`
-version DOI.
+Archived at DOI **10.5281/zenodo.24052532** (concept DOI; the badge above
+resolves to the latest version). Cite the concept DOI rather than a version DOI,
+so that the citation stays valid as further versions are archived.
 
-Code accompanying the manuscript *"From germline risk to lesional tissue:
-druggable-genome Mendelian randomization prioritises GDF11 for oral lichen
-planus"*.
+**`v1.0.0` (10.5281/zenodo.24052533) is superseded and does not reproduce the
+published results** — it predates both the allele-alignment correction and the
+analyses added during revision (see *Corrections after first release* below).
+Use the current version.
+
+Code accompanying the manuscript *"Genetic evidence at the GDF11–SUOX locus in
+oral lichen planus: a Mendelian randomization and colocalisation study"*.
 
 This repository is the analysis code only. No data are redistributed here:
 all inputs are public summary statistics or public single-cell data, listed
@@ -189,6 +191,29 @@ gmx_MMPBSA 1.5.0.3, Ubuntu 22.04.5, NVIDIA driver 560.35.03. R 4.4.2 provided
 `coloc.susie`), `susieR`, `cowplot`, `scales`, `GenomicRanges` and `Rsamtools`.
 The Python analysis used `scanpy`, `anndata`, `scipy`, `pandas`, `numpy`,
 `rdkit`, `liana`, `scrublet` and `python-docx`.
+
+### Scripts added for the revised analyses
+
+The analyses reported in the revised manuscript are in these files. Paths are
+relative to the repository root; all of them were run from the root.
+
+| Script | Reads | Produces |
+|---|---|---|
+| `analysis/scripts/mr_oral_strict_sensitivity.R` | `data/raw/finngen_r13/finngen_R13_K11_ORAL_LICHEN_PLANUS.gz`, `data/processed/eqtl/top_cis_eqtl.csv`, `top_cis_eqtl_nsamples.csv` | `results/tables/corrected/mr_olp_oral_results_corrected.csv` |
+| `analysis/scripts/prepare_coloc_oral.R` | the oral endpoint above, `data/processed/coloc/coloc_eqtl_windows.csv` | `data/processed/coloc/coloc_fg_oral.csv` |
+| `analysis/scripts/run_susie_coloc_three_definitions.R` | the three `coloc_fg_*.csv`, `coloc_eqtl_windows.csv`, `data/processed/coloc/ld_1000g/` | `results/tables/corrected/susie_coloc_three_definitions.csv` |
+| `analysis/scripts/chr12_conditional_analysis.py` | `coloc_eqtl_windows.csv`, `coloc_fg_wide.csv`, `ld_1000g/SUOX_ld.csv.gz` | `results/tables/corrected/chr12_conditional_analysis.csv` |
+| `analysis/scripts/chr12_two_exposure_mvmr.py` | the same three files | `results/tables/corrected/chr12_two_exposure_mvmr.csv` |
+| `analysis/scripts/mr_se_propagation_sensitivity.py` | the corrected WIDE and INCLAVO result tables | `mr_olp_se_propagation_sensitivity.csv` |
+| `analysis/scripts/steiger_oral_strict.py` | `mr_olp_oral_results_corrected.csv`, `coloc_eqtl_windows.csv` | `steiger_oral_strict.csv` |
+| `analysis/scripts/scrna_leave_one_donor_out.py` | the corrected composition and erosion per-sample tables | `scrna_leave_one_donor_out_composition.csv`, `..._expression.csv` |
+| `analysis/scripts/verify_alignment_against_raw.py` | `data/processed/eqtl/mr_input_wide.csv`, `results/tables/phewas_olp_all.csv` | console check only |
+
+`coloc_eqtl_windows.csv`, `coloc_fg_wide.csv` and `coloc_fg_inclavo.csv` are
+written by `prepare_coloc_data.R`; the LD matrix directory by the same script.
+The conditional and multivariable analyses at chromosome 12 are the ones that
+show the two instruments cannot separate *GDF11* from *SUOX*; both are included
+so that this result can be reproduced rather than taken on trust.
 
 ## Corrections after first release
 

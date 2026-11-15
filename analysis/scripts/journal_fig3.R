@@ -4,7 +4,14 @@ suppressMessages({library(ggplot2); library(data.table)})
 source("analysis/scripts/journal_theme.R")
 
 d <- fread("results/tables/final_target_evidence.csv")
-tier_lev <- c("TIER1", "TIER2", "TIER3")
+# Evidence class after the chromosome-12 conditional analysis: GDF11 and SUOX are one
+# locus and are not ordered against each other, so the historical TIER1/TIER2 split in
+# the table is not used here. FIRST/SECOND/THIRD are the classes reported in the paper.
+d[, tier := fcase(gene %in% c("GDF11", "SUOX"), "FIRST",
+                  gene == "EGFL8", "SECOND",
+                  gene %in% c("TAPBP", "HLA-DPA1"), "THIRD",
+                  default = NA_character_)]
+tier_lev <- c("FIRST", "SECOND", "THIRD")
 d[, tier := factor(tier, levels = tier_lev)]
 
 # 长表：每基因 2 行（WIDE / INCLAVO），CI 字符串拆分
@@ -35,14 +42,15 @@ p <- ggplot(long, aes(x = or, y = lbl)) +
   geom_text(aes(x = max(long$hi) * 1.9 * 0.97, y = lbl, label = sprintf("PP.H4 %.2f", susie)),
             hjust = 1, size = 2.0, colour = "grey30", fontface = "italic") +
   scale_x_log10(breaks = c(0.1, 0.25, 0.5, 1, 2, 4, 8, 16, 32)) +
-  scale_colour_manual(values = tier_colours, name = "Final tier") +
+  scale_colour_manual(values = tier_colours, name = "Evidence class",
+                      labels = c(FIRST = "First", SECOND = "Second", THIRD = "Third")) +
   scale_shape_manual(values = c(WIDE = 19, INCLAVO = 1), name = "OLP cohort") +
   # the left limit was hard-coded at 0.12; take the range from the data so that
   # estimates with a lower bound below it are not clipped
   coord_cartesian(xlim = c(min(long$lo) * 0.85, max(long$hi) * 1.9), clip = "off") +
   labs(x = "MR Wald-ratio OR (eQTLGen cis-eQTL \u2192 FinnGen R13 OLP; log scale)",
        y = NULL,
-       title = "Tiered candidate drug targets for oral lichen planus",
+       title = "Candidate drug targets by evidence class",
        subtitle = paste0("Single top cis-eQTL IV per gene; error bars = 95% CI; dashed line OR = 1; ",
                          "OR < 1 = higher expression associated with lower risk; ",
                          "right column = coloc.susie PP.H4")) +

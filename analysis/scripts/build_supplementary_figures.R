@@ -27,9 +27,11 @@ save_supp <- function(base, p, width_mm = 180, height_mm = 120) {
 # ---------------------------------------------------------------------------
 t1 <- fread(file.path(SUP, "suppl_table_02_wide_hits_mr_replication_coloc.csv"))
 # Final curated tier (manuscript): NOT the automated screen tier strings in the table
-t1[, class := ifelse(gene == "GDF11", "TIER1",
-              ifelse(gene %in% c("SUOX", "EGFL8"), "TIER2",
-              ifelse(gene %in% c("TAPBP", "HLA-DPA1"), "TIER3", "other")))]
+# Evidence classes after the chromosome-12 conditional analysis: GDF11 and SUOX are one
+# locus and are not ordered against each other, so they share the first class.
+t1[, class := ifelse(gene %in% c("GDF11", "SUOX"), "FIRST",
+              ifelse(gene == "EGFL8", "SECOND",
+              ifelse(gene %in% c("TAPBP", "HLA-DPA1"), "THIRD", "other")))]
 ord <- t1[order(-log10(MR_P_WIDE)), unique(gene)]
 t1[, gene := factor(gene, levels = ord)]
 
@@ -43,13 +45,13 @@ p1 <- ggplot(lng1, aes(x = OR, y = gene, colour = class, shape = cohort,
   geom_pointrange(position = position_dodge(width = 0.55), size = 0.28, linewidth = 0.35,
                   fatten = 2.6) +
   scale_x_log10(breaks = c(0.2, 0.5, 1, 2, 5, 10), labels = c("0.2", "0.5", "1", "2", "5", "10")) +
-  scale_colour_manual(values = c(TIER1 = "#C8102E", TIER2 = "#005BBB", TIER3 = "#7F7F7F", other = "#B8B8B8"),
-                      labels = c(TIER1 = "TIER1", TIER2 = "TIER2", TIER3 = "TIER3", other = "Not tiered"),
-                      name = "Final tier") +
+  scale_colour_manual(values = c(FIRST = "#C8102E", SECOND = "#005BBB", THIRD = "#7F7F7F", other = "#B8B8B8"),
+                      labels = c(FIRST = "First", SECOND = "Second", THIRD = "Third", other = "Not classed"),
+                      name = "Evidence class") +
   scale_shape_manual(values = c(WIDE = 19, INCLAVO = 21), name = "OLP definition") +
   labs(x = "Odds ratio per 1-SD higher genetically predicted expression (95% CI, log scale)",
        y = NULL,
-       title = "All 22 WIDE Bonferroni-significant druggable genes: dual-cohort MR",
+       title = "All 22 WIDE hits: within-FinnGen comparison across phenotype definitions",
        subtitle = "eQTLGen cis-eQTL single-IV Wald ratio -> FinnGen R13 OLP WIDE (9,526) / INCLAVO (2,491); Bonferroni P = 9.9 x 1e-6") +
   theme_journal(8) +
   theme(panel.grid.major.x = element_line(colour = "grey92", linewidth = 0.3))
